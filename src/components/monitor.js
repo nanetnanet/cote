@@ -60,21 +60,20 @@ module.exports = class Monitor extends Configurable(Component) {
             let index = 3;
             charm.position(0, 2);
             charm.foreground('green').
-                write('Name').move(16).
                 write('id').move(37).
-                write('Address').move(11).
-                write('Port');
+                write('Address').move(9).
+                write('Port').move(3).
+                write('Name')
 
             charm.erase('down');
 
             this.discovery.eachNode((node) => {
                 let port = node.advertisement.port || '----';
                 port += '';
-                charm.position(0, index).foreground('cyan').
-                    write(node.advertisement.name.slice(0, 20)).move(20 - node.advertisement.name.length, 0).
-                    foreground('magenta').write(node.id).move(3, 0).
+                charm.position(0, index).foreground('magenta').write(node.id).move(3, 0).
                     foreground('yellow').write(node.address).move(3, 0).
-                    foreground('red').write(port);
+                    foreground('red').write(port).move(3,0).
+                    foreground('cyan').write(node.advertisement.name.slice(0, 65));
                 index++;
             });
 
